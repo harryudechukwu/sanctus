@@ -15,7 +15,7 @@ export function DetailOverlay({ saint }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/40" onClick={closeOverlay} />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-[3px]" onClick={closeOverlay} />
       <div className="relative z-10 mx-3 flex aspect-[1/2] max-h-[90vh] w-full max-w-md flex-col overflow-hidden bg-white shadow-2xl">
         <div className="absolute left-2 top-2 z-10">
           <button

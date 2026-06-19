@@ -23,6 +23,14 @@ export function Home() {
 
   const showGrid = !loading && minReady
 
+  useEffect(() => {
+    if (!showGrid) return
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('show-install-prompt'))
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [showGrid])
+
   const handleImgError = (e) => {
     e.target.src = FALLBACK_ICON
   }

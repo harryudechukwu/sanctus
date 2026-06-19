@@ -1,61 +1,69 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
   const [visible, setVisible] = useState(false)
+  const deferredRef = useRef(null)
 
   useEffect(() => {
-    const handler = (e) => {
+    const beforeInstallHandler = (e) => {
       e.preventDefault()
+      deferredRef.current = e
       setDeferredPrompt(e)
     }
-    window.addEventListener('beforeinstallprompt', handler)
+    window.addEventListener('beforeinstallprompt', beforeInstallHandler)
 
-    const timer = setTimeout(() => {
-      if (deferredPrompt !== null || !window.matchMedia('(display-mode: standalone)').matches) {
-        setVisible(true)
+    const showHandler = () => {
+      if (!deferredRef.current) {
+        deferredRef.current = { prompt: async () => {}, userChoice: Promise.resolve({ outcome: '' }) }
+        setDeferredPrompt(deferredRef.current)
       }
-    }, 30000)
-
-    window.addEventListener('appinstalled', () => {
-      setVisible(false)
-    })
+      setVisible(true)
+    }
+    window.addEventListener('show-install-prompt', showHandler)
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handler)
-      clearTimeout(timer)
+      window.removeEventListener('beforeinstallprompt', beforeInstallHandler)
+      window.removeEventListener('show-install-prompt', showHandler)
     }
-  }, [deferredPrompt])
+  }, [])
+
+  const close = () => setVisible(false)
 
   if (!visible || !deferredPrompt) return null
 
   const handleInstall = async () => {
     deferredPrompt.prompt()
     const result = await deferredPrompt.userChoice
-    if (result.outcome === 'accepted') {
-      setVisible(false)
-    }
+    if (result.outcome === 'accepted') setVisible(false)
     setDeferredPrompt(null)
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-gray-200 bg-white px-4 py-3 shadow-lg">
-      <p className="text-sm text-gray-700">
-        Install Sanctus for quick access to saints anytime, even offline.
-      </p>
-      <div className="mt-2 flex gap-2">
-        <button
-          onClick={handleInstall}
-          className="bg-gray-900 px-4 py-1.5 text-sm font-medium text-white"
-        >
-          Install
-        </button>
-        <button
-          onClick={() => setVisible(false)}
-          className="bg-gray-100 px-4 py-1.5 text-sm font-medium text-gray-600"
-        >
-          Not now
-        </button>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-[3px]" onClick={close} />
+      <div className="relative z-10 mx-3 flex w-full max-w-md flex-col items-center gap-6 bg-white px-4 py-8 shadow-2xl">
+        <img src="/icons/icon.png" alt="" className="h-16 w-16" />
+        <div className="flex flex-col items-center gap-1">
+        <h2 className="text-2xl font-bold text-gray-900">Install Sanctus</h2>
+        <p className="text-center text-lg text-gray-600 leading-tight">
+          Search 5,795 saints, bookmark your favorites, and discover a new saint every day. Saved bookmarks are stored on your device and will be available even when you're offline.
+        </p>
+        </div>
+        <div className="flex flex-col gap-3 w-full">
+          <button
+            onClick={handleInstall}
+            className="w-full bg-gray-900 py-3.5 text-base font-bold text-white"
+          >
+            Install
+          </button>
+          <button
+            onClick={close}
+            className="w-full bg-gray-100 py-3.5 text-base font-bold text-gray-600"
+          >
+            Not now
+          </button>
+        </div>
       </div>
     </div>
   )
