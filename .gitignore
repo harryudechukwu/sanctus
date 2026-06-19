@@ -13,6 +13,12 @@ dist-ssr
 *.local
 .env
 
+# Scraped data & cache
+saints_scraped.json
+.scrape_state.json
+scripts/__pycache__/
+src/data/saints.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

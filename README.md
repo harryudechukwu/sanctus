@@ -1,16 +1,50 @@
-# React + Vite
+# Sanctus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Catholic saints directory — single-page overlay-based PWA with 5,795 saints. Search, bookmark, and explore saint biographies with offline support.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **5,795 saints** with biographies, feast days, patronage, and images
+- **Search** with debounced input across names, patronage, and origin
+- **Bookmarks** persisted in IndexedDB
+- **Saint of the Day** — daily featured saint
+- **PWA** — installable, caches images for offline access
+- **Desaturated grid** — hover to reveal full color
+- **Hide-on-scroll header** — scroll down to hide nav, up to show
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** + **Vite 8**
+- **Tailwind CSS v4**
+- **Supabase** — saints data storage
+- **IndexedDB** (`idb`) — bookmarks
+- **Phosphor Icons**
+- **vite-plugin-pwa** — service worker & manifest
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+### Environment Variables
+
+Create a `.env` file:
+
+```
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+Deploy the `dist/` folder to any static host.
+
+## Data Source
+
+Saint data sourced from [Catholic.org](https://www.catholic.org).
