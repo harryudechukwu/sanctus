@@ -24,12 +24,12 @@ export function BookmarksOverlay() {
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-[3px]" onClick={closeOverlay} />
       <div className="relative z-10 mx-3 flex aspect-[1/2] max-h-[90vh] w-full max-w-md flex-col overflow-hidden bg-white shadow-2xl">
-        <div className="border-b border-gray-100 px-4 pt-3 pb-2">
+        <div className="px-2 pt-3 pb-2">
           <button onClick={closeOverlay} className="flex items-center gap-1 text-gray-500 mb-3">
             <CaretLeft className="h-4 w-4" />
             <span className="text-base">Go back</span>
           </button>
-          <span className="text-sm font-semibold text-gray-900">Bookmarks</span>
+          <span className="text-base font-semibold text-gray-900">Bookmarks</span>
         </div>
 
         <div className="flex-1 overflow-y-auto pb-4">

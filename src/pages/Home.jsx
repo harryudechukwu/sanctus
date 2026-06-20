@@ -46,7 +46,7 @@ export function Home() {
   return (
     <div>
       <header ref={headerRef} className="fixed inset-x-0 top-0 z-50">
-        <div className="flex items-center justify-between px-3 py-1.5">
+        <div className="flex items-center justify-between max-md:gap-x-1.5 px-3 py-1.5">
           <div className="flex items-center justify-center bg-white py-1 w-12 flex-shrink-0">
             {showGrid ? (
               <img src="/favicon.svg" alt="Sanctus" className="h-10 w-10" />
