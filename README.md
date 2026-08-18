@@ -16,7 +16,7 @@ A Catholic saints directory — single-page overlay-based PWA with 5,795 saints.
 
 - **React 19** + **Vite 8**
 - **Tailwind CSS v4**
-- **Supabase** — saints data storage
+- **Static JSON** (`public/saints.json`) — saints data, served from the CDN and precached for offline
 - **IndexedDB** (`idb`) — bookmarks
 - **Phosphor Icons**
 - **vite-plugin-pwa** — service worker & manifest
@@ -28,14 +28,7 @@ npm install
 npm run dev
 ```
 
-### Environment Variables
-
-Create a `.env` file:
-
-```
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
+No environment variables or backend required — all saint data is bundled in `public/saints.json`.
 
 ## Build
 

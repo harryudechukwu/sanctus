@@ -53,18 +53,6 @@ export default defineConfig({
               },
             },
           },
-          {
-            urlPattern: /^https:\/\/[a-z]+\.supabase\.co\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 24 * 60 * 60,
-              },
-              networkTimeoutSeconds: 5,
-            },
-          },
         ],
       },
     }),

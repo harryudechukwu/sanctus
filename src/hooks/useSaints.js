@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
 
 const CACHE_KEY = 'sanctus_saints'
 const CACHE_TTL = 24 * 60 * 60 * 1000
@@ -38,17 +37,12 @@ export function useSaints() {
       return
     }
 
-    if (!supabase) {
-      setError('Supabase not configured')
-      setLoading(false)
-      return
-    }
-
-    supabase
-      .from('saints')
-      .select('*')
-      .then(({ data, error }) => {
-        if (error) throw error
+    fetch(`${import.meta.env.BASE_URL}saints.json`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to load saints (${res.status})`)
+        return res.json()
+      })
+      .then((data) => {
         if (data && data.length > 0) {
           setSaints(data)
           setCache(data)
